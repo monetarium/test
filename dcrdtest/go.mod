@@ -1,4 +1,4 @@
-module github.com/monetarium/dcrtest/dcrdtest
+module github.com/monetarium/test/dcrdtest
 
 go 1.23.0
 
