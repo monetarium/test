@@ -13,11 +13,11 @@ import (
 	"runtime"
 	"time"
 
-	"github.com/decred/dcrd/blockchain/standalone/v2"
-	"github.com/decred/dcrd/chaincfg/chainhash"
-	dcrdtypes "github.com/decred/dcrd/rpc/jsonrpc/types/v4"
-	"github.com/decred/dcrd/rpcclient/v8"
-	"github.com/decred/dcrd/wire"
+	"github.com/monetarium/node/blockchain/standalone"
+	"github.com/monetarium/node/chaincfg/chainhash"
+	dcrdtypes "github.com/monetarium/node/rpc/jsonrpc/types"
+	"github.com/monetarium/node/rpcclient"
+	"github.com/monetarium/node/wire"
 )
 
 // solveBlock attempts to find a nonce which makes the passed block header hash

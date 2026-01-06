@@ -11,19 +11,20 @@ import (
 	"strings"
 	"time"
 
-	"github.com/decred/dcrd/blockchain/stake/v5"
-	"github.com/decred/dcrd/blockchain/standalone/v2"
-	"github.com/decred/dcrd/chaincfg/chainhash"
-	"github.com/decred/dcrd/chaincfg/v3"
-	"github.com/decred/dcrd/dcrec"
-	"github.com/decred/dcrd/dcrec/secp256k1/v4"
-	"github.com/decred/dcrd/dcrutil/v4"
-	dcrdtypes "github.com/decred/dcrd/rpc/jsonrpc/types/v4"
-	"github.com/decred/dcrd/rpcclient/v8"
-	"github.com/decred/dcrd/txscript/v4"
-	"github.com/decred/dcrd/txscript/v4/sign"
-	"github.com/decred/dcrd/txscript/v4/stdaddr"
-	"github.com/decred/dcrd/wire"
+	"github.com/monetarium/node/blockchain/stake"
+	"github.com/monetarium/node/blockchain/standalone"
+	"github.com/monetarium/node/chaincfg/chainhash"
+	"github.com/monetarium/node/chaincfg"
+	"github.com/monetarium/node/cointype"
+	"github.com/monetarium/node/dcrec"
+	"github.com/monetarium/node/dcrec/secp256k1"
+	"github.com/monetarium/node/dcrutil"
+	dcrdtypes "github.com/monetarium/node/rpc/jsonrpc/types"
+	"github.com/monetarium/node/rpcclient"
+	"github.com/monetarium/node/txscript"
+	"github.com/monetarium/node/txscript/sign"
+	"github.com/monetarium/node/txscript/stdaddr"
+	"github.com/monetarium/node/wire"
 )
 
 var (
@@ -395,6 +396,7 @@ func (w *VotingWallet) onBlockConnected(blockHeader []byte, transactions [][]byt
 func newTxOut(amount int64, pkScriptVer uint16, pkScript []byte) *wire.TxOut {
 	return &wire.TxOut{
 		Value:    amount,
+		CoinType: cointype.CoinTypeVAR,
 		Version:  pkScriptVer,
 		PkScript: pkScript,
 	}

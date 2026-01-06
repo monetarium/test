@@ -20,8 +20,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/decred/dcrd/certgen"
-	rpc "github.com/decred/dcrd/rpcclient/v8"
+	"github.com/monetarium/node/certgen"
+	rpc "github.com/monetarium/node/rpcclient"
 )
 
 // errDcrdCmdExec is the error returned when the dcrd binary is not executed.

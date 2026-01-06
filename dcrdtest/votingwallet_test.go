@@ -9,8 +9,8 @@ import (
 	"os"
 	"testing"
 
-	"github.com/decred/dcrd/chaincfg/v3"
-	"github.com/decred/dcrd/rpcclient/v8"
+	"github.com/monetarium/node/chaincfg"
+	"github.com/monetarium/node/rpcclient"
 )
 
 // testCanPassSVH tests whether the wallet can maintain the chain going past SVH

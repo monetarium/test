@@ -12,18 +12,19 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/decred/dcrd/blockchain/standalone/v2"
-	"github.com/decred/dcrd/chaincfg/chainhash"
-	"github.com/decred/dcrd/chaincfg/v3"
-	"github.com/decred/dcrd/dcrec"
-	"github.com/decred/dcrd/dcrec/secp256k1/v4"
-	"github.com/decred/dcrd/dcrutil/v4"
-	"github.com/decred/dcrd/hdkeychain/v3"
-	"github.com/decred/dcrd/rpcclient/v8"
-	"github.com/decred/dcrd/txscript/v4"
-	"github.com/decred/dcrd/txscript/v4/sign"
-	"github.com/decred/dcrd/txscript/v4/stdaddr"
-	"github.com/decred/dcrd/wire"
+	"github.com/monetarium/node/blockchain/standalone"
+	"github.com/monetarium/node/chaincfg/chainhash"
+	"github.com/monetarium/node/chaincfg"
+	"github.com/monetarium/node/cointype"
+	"github.com/monetarium/node/dcrec"
+	"github.com/monetarium/node/dcrec/secp256k1"
+	"github.com/monetarium/node/dcrutil"
+	"github.com/monetarium/node/hdkeychain"
+	"github.com/monetarium/node/rpcclient"
+	"github.com/monetarium/node/txscript"
+	"github.com/monetarium/node/txscript/sign"
+	"github.com/monetarium/node/txscript/stdaddr"
+	"github.com/monetarium/node/wire"
 )
 
 const (
@@ -51,6 +52,7 @@ var (
 type utxo struct {
 	pkScript       []byte
 	value          dcrutil.Amount
+	coinType       cointype.CoinType
 	maturityHeight int64
 	keyIndex       uint32
 	isLocked       bool
@@ -319,6 +321,7 @@ func (m *memWallet) evalOutputs(outputs []*wire.TxOut, txHash *chainhash.Hash, i
 			op := wire.OutPoint{Hash: *txHash, Index: uint32(i)}
 			m.utxos[op] = &utxo{
 				value:          dcrutil.Amount(output.Value),
+				coinType:       output.CoinType,
 				keyIndex:       keyIndex,
 				maturityHeight: maturityHeight,
 				pkScript:       pkScript,
@@ -477,6 +480,7 @@ func (m *memWallet) fundTx(ctx context.Context, tx *wire.MsgTx, amt dcrutil.Amou
 			pkScriptVer, pkScript := addr.PaymentScript()
 			changeOutput := &wire.TxOut{
 				Value:    int64(changeVal),
+				CoinType: cointype.CoinTypeVAR,
 				Version:  pkScriptVer,
 				PkScript: pkScript,
 			}

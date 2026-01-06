@@ -15,11 +15,12 @@ import (
 	"testing"
 	"time"
 
-	"github.com/decred/dcrd/chaincfg/chainhash"
-	"github.com/decred/dcrd/chaincfg/v3"
-	"github.com/decred/dcrd/dcrutil/v4"
-	dcrdtypes "github.com/decred/dcrd/rpc/jsonrpc/types/v4"
-	"github.com/decred/dcrd/wire"
+	"github.com/monetarium/node/chaincfg/chainhash"
+	"github.com/monetarium/node/chaincfg"
+	"github.com/monetarium/node/cointype"
+	"github.com/monetarium/node/dcrutil"
+	dcrdtypes "github.com/monetarium/node/rpc/jsonrpc/types"
+	"github.com/monetarium/node/wire"
 	"github.com/decred/slog"
 	"matheusd.com/testctx"
 )
@@ -67,7 +68,7 @@ func testSendOutputs(ctx context.Context, r *Harness, t *testing.T) {
 
 	// First, generate a small spend which will require only a single
 	// input.
-	txid := genSpend(dcrutil.Amount(5 * dcrutil.AtomsPerCoin))
+	txid := genSpend(dcrutil.Amount(5 * cointype.AtomsPerVAR))
 
 	// Generate a single block, the transaction the wallet created should
 	// be found in this block.
@@ -83,7 +84,7 @@ func testSendOutputs(ctx context.Context, r *Harness, t *testing.T) {
 
 	// Next, generate a spend much greater than the block reward. This
 	// transaction should also have been mined properly.
-	txid = genSpend(dcrutil.Amount(5000 * dcrutil.AtomsPerCoin))
+	txid = genSpend(dcrutil.Amount(5000 * cointype.AtomsPerVAR))
 	if err := r.Node.RegenTemplate(ctx); err != nil {
 		t.Fatalf("unable to regenerate block template: %v", err)
 	}
@@ -499,7 +500,7 @@ func testMemWalletReorg(ctx context.Context, r *Harness, t *testing.T) {
 	defer harness.TearDown()
 
 	// Ensure the internal wallet has the expected balance.
-	expectedBalance := dcrutil.Amount(5 * 300 * dcrutil.AtomsPerCoin)
+	expectedBalance := dcrutil.Amount(5 * 300 * cointype.AtomsPerVAR)
 	walletBalance := harness.ConfirmedBalance()
 	if expectedBalance != walletBalance {
 		t.Fatalf("wallet balance incorrect: expected %v, got %v",
@@ -540,7 +541,7 @@ func testMemWalletLockedOutputs(ctx context.Context, r *Harness, t *testing.T) {
 		t.Fatalf("unable to generate new address: %v", err)
 	}
 	pkScriptVer, pkScript := addr.PaymentScript()
-	outputAmt := dcrutil.Amount(50 * dcrutil.AtomsPerCoin)
+	outputAmt := dcrutil.Amount(50 * cointype.AtomsPerVAR)
 	output := newTxOut(int64(outputAmt), pkScriptVer, pkScript)
 	tx, err := r.CreateTransaction(ctx, []*wire.TxOut{output}, 10)
 	if err != nil {
@@ -586,7 +587,7 @@ func TestHarness(t *testing.T) {
 	defer mainHarness.TearDownInTest(t)
 
 	// We should have the expected amount of mature unspent outputs.
-	expectedBalance := dcrutil.Amount(numMatureOutputs * 300 * dcrutil.AtomsPerCoin)
+	expectedBalance := dcrutil.Amount(numMatureOutputs * 300 * cointype.AtomsPerVAR)
 	harnessBalance := mainHarness.ConfirmedBalance()
 	if harnessBalance != expectedBalance {
 		t.Fatalf("expected wallet balance of %v instead have %v",
