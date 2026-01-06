@@ -11,11 +11,11 @@ import (
 // buildDcrd builds a monetarium node binary in a temp file and returns the path to the
 // binary. This requires the Go toolchain to be installed and available in
 // the machine. The version of the node package built depends on the currently
-// required version of the github.com/monetarium/node module, which may be defined
+// required version of the github.com/monetarium/monetarium-node module, which may be defined
 // by either this go mod, a parent go mod (when this package is included as a
 // library in a project) or the current workspace.
 func buildDcrd() (string, error) {
-	const dcrdMainPkg = "github.com/monetarium/node"
+	const dcrdMainPkg = "github.com/monetarium/monetarium-node"
 	outDir, err := os.MkdirTemp("", "dcrdtestdcrdnode")
 	if err != nil {
 		return "", err

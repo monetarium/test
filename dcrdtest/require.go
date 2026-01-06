@@ -6,5 +6,5 @@
 package dcrdtest
 
 import (
-	_ "github.com/monetarium/node"
+	_ "github.com/monetarium/monetarium-node"
 )

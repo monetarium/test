@@ -10,8 +10,8 @@ import (
 	"reflect"
 	"time"
 
-	dcrdtypes "github.com/monetarium/node/rpc/jsonrpc/types"
-	"github.com/monetarium/node/rpcclient"
+	dcrdtypes "github.com/monetarium/monetarium-node/rpc/jsonrpc/types"
+	"github.com/monetarium/monetarium-node/rpcclient"
 )
 
 // JoinType is an enum representing a particular type of "node join". A node

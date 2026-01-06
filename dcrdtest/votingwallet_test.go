@@ -9,8 +9,8 @@ import (
 	"os"
 	"testing"
 
-	"github.com/monetarium/node/chaincfg"
-	"github.com/monetarium/node/rpcclient"
+	"github.com/monetarium/monetarium-node/chaincfg"
+	"github.com/monetarium/monetarium-node/rpcclient"
 )
 
 // testCanPassSVH tests whether the wallet can maintain the chain going past SVH
